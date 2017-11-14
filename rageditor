@@ -5,7 +5,7 @@ PATH=/sbin:/usr/sbin:/usr/bin:/bin
 # Paglia Host Brasil: www.pagliahost.com.br
 #
 # RagEditor Linux - Script para edição automatizada de servidores de Ragnarok
-# Criado em: 114/11/2017
+# Criado em: 14/11/2017
 #
 # Colaboradores:
 # Linguagens Disponíveis: Português (PT-BR)
@@ -39,10 +39,13 @@ echo ""
 echo -n ">>> Digite a opção desejada: "
 read OPCAO
 
-# Comando para descobrir qual é o emulador usado pelo usuário
+# Comando para descobrir qual o nome do emulador está atualmente configurado no arquivo char-server.conf
 
-DESC_EMULADOR=$(cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 || cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1)
-DESC2_EMULADOR=$(ls -l $LOCAL_EMULADOR | awk '{print $9}' | cut -d "-" -f1 | uniq | grep -E "brAthena|Cronus|Hercules")
+NOME_ATUAL=$(cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 || cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1)
+
+# Comando para descobrir qual o emulador instalado no momento, brAthena, Cronus ou Hércules
+
+DESC_EMULADOR=$(ls -l $LOCAL_EMULADOR | awk '{print $9}' | cut -d "-" -f1 | uniq | grep -E "brAthena|Cronus|Hercules")
 
 # CASE com as programações de cada opção
 
@@ -52,18 +55,24 @@ case $OPCAO in
 	
 		echo ""
 		echo -n ">>> Digite o nome do seu servidor: "
-		read NOME_SERVIDOR
+		read NOVO_NOME
 		
-		if [ "$DESC2_EMULADOR" = "brAthena" ]
+		if [ "$DESC_EMULADOR" = "brAthena" ]
 		then
-			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i 's/$DESC_EMULADOR/$NOME_SERVIDOR/d' $LOCAL_EMULADOR/conf/char-server.conf
+			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
+			
+			MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2)
+			
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME/" $LOCAL_EMULADOR/npc/MOTD.txt
+
 			echo ""
-			echo "Nome do servidor alterado com sucesso para: $NOME_SERVIDOR"
+			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
 		else
-			echo "O nome do seu servidor não pode ser mudado"
+			echo ""
+			echo "O nome do seu servidor não pode ser mudado, verifique se o mesmo é brAthena, Cronus ou Hércules."
 		fi	
 	;;		
 
 	"*") echo "SELECIONE UMA DAS OPÇÕES DO MENU OU DIGITE: SAIR"
-;;
+	;;
 esac	
