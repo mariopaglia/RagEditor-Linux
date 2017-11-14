@@ -34,7 +34,6 @@ echo "[6] CONFIGURAR RATES"
 echo "[7] CONFIGURAR DROPS"
 echo "[8] CONFIGURAR LEVEL MÁXIMO"
 echo "[9] CONFIGURAR ASPD"
-echo "[10] "
 echo ""
 echo "PARA SAIR, DIGITE SAIR OU APERTE CTRL+C"
 echo ""
@@ -61,10 +60,12 @@ case $OPCAO in
 		
 		if [ "$DESC_EMULADOR" = "brAthena" ]
 		then
+			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
 			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
 			
 			MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2)
 			
+			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
 			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME/" $LOCAL_EMULADOR/npc/MOTD.txt
 
 			echo ""
