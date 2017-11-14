@@ -1,6 +1,6 @@
 # RagEditor - Linux
 
-Criamos o projeto do RagEditor - Linux para facilitar de automatizada e interativa a edição de emuladores de Ragnarok através de Shell (Linux), atualmente estamos trabalhando visando a compatibilidade com os seguintes emuladores:
+Criamos o projeto do RagEditor - Linux para que de forma automatizada e interativa você possa realizar a edição de emuladores de Ragnarok através de Shell (Linux), atualmente estamos trabalhando visando a compatibilidade com os seguintes emuladores:
 
 * brAthena
 * Cronus
