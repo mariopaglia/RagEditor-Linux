@@ -1,0 +1,69 @@
+#!/bin/bash
+SHELL=/bin/sh
+PATH=/sbin:/usr/sbin:/usr/bin:/bin
+# Desenvolvido por: Mário Augusto Paglia Junior
+# Paglia Host Brasil: www.pagliahost.com.br
+#
+# RagEditor Linux - Script para edição automatizada de servidores de Ragnarok
+# Criado em: 114/11/2017
+#
+# Colaboradores:
+# Linguagens Disponíveis: Português (PT-BR)
+#
+# Versões:
+#
+# 1.0 - Desenvolvimento e criação inicial do script
+
+# Variáveis de Ambiente
+
+LOCAL_EMULADOR=/home/emulador			# Mudar aqui o diretório padrão do seu emulador (até a pasta raiz)
+
+# Menu inicial com a escolha de opções
+
+clear
+echo "###### DIGITE UMA DAS OPÇÕES ABAIXO ######"
+echo ""
+echo "[1] CONFIGURAR NOME DO SERVIDOR"
+echo "[2] CONFIGURAR IP DA VPS (CONEXÃO)"
+echo "[3] CONFIGURAR ACESSO AO BANCO DE DADOS (INTER-SERVER)"
+echo "[4] CONFIGURAR PRÉ RENOVAÇÃO OU RENOVAÇÃO"
+echo "[5] CONFIGURAR VERSÃO DO HEXED"
+echo "[6] CONFIGURAR RATES"
+echo "[7] CONFIGURAR DROPS"
+echo "[8] CONFIGURAR LEVEL MÁXIMO"
+echo "[9] CONFIGURAR ASPD"
+echo "[10] "
+echo ""
+echo "PARA SAIR, DIGITE SAIR OU APERTE CTRL+C"
+echo ""
+echo -n ">>> Digite a opção desejada: "
+read OPCAO
+
+# Comando para descobrir qual é o emulador usado pelo usuário
+
+DESC_EMULADOR=$(cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 || cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1)
+DESC2_EMULADOR=$(ls -l $LOCAL_EMULADOR | awk '{print $9}' | cut -d "-" -f1 | uniq | grep -E "brAthena|Cronus|Hercules")
+
+# CASE com as programações de cada opção
+
+case $OPCAO in
+
+	"1")
+	
+		echo ""
+		echo -n ">>> Digite o nome do seu servidor: "
+		read NOME_SERVIDOR
+		
+		if [ "$DESC2_EMULADOR" = "brAthena" ]
+		then
+			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i 's/$DESC_EMULADOR/$NOME_SERVIDOR/d' $LOCAL_EMULADOR/conf/char-server.conf
+			echo ""
+			echo "Nome do servidor alterado com sucesso para: $NOME_SERVIDOR"
+		else
+			echo "O nome do seu servidor não pode ser mudado"
+		fi	
+	;;		
+
+	"*") echo "SELECIONE UMA DAS OPÇÕES DO MENU OU DIGITE: SAIR"
+;;
+esac	
