@@ -4,19 +4,21 @@ PATH=/sbin:/usr/sbin:/usr/bin:/bin
 # Desenvolvido por: Mário Augusto Paglia Junior
 # Paglia Host Brasil: www.pagliahost.com.br
 #
-# RagEditor Linux - Script para edição automatizada de servidores de Ragnarok
+# RagEditor Linux - Script para edição automatizada e interativa de emuladores de Ragnarok
 # Criado em: 14/11/2017
 #
 # Colaboradores:
+#
+# Emuladores Compatíveis: brAthena, Cronus e Hércules
 # Linguagens Disponíveis: Português (PT-BR)
 #
 # Versões:
 #
-# 1.0 - Desenvolvimento e criação inicial do script
+# 1.0 - Desenvolvimento e criação inicial do script 
 
 # Variáveis de Ambiente
 
-LOCAL_EMULADOR=/home/emulador			# Mudar aqui o diretório padrão do seu emulador (até a pasta raiz)
+LOCAL_EMULADOR=/home/emulador		# Mudar aqui o diretório padrão do seu emulador (até a pasta raiz)
 
 # Menu inicial com a escolha de opções
 
@@ -73,6 +75,4 @@ case $OPCAO in
 		fi	
 	;;		
 
-	"*") echo "SELECIONE UMA DAS OPÇÕES DO MENU OU DIGITE: SAIR"
-	;;
 esac	
