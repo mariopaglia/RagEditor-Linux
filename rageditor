@@ -63,13 +63,37 @@ case $OPCAO in
 			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
 			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
 			
-			MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2)
+				MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
 			
 			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
-			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep "Bem" | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME/" $LOCAL_EMULADOR/npc/MOTD.txt
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME/" $LOCAL_EMULADOR/npc/MOTD.txt
 
 			echo ""
 			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
+			echo ""
+		elif [ "$DESC_EMULADOR" = "Cronus" ]
+		then
+			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção				
+			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
+			
+			# Converter MOTD.txt original ISO-8859 em UTF-8
+			iconv -f iso-8859-1 -t utf-8 $LOCAL_EMULADOR/npc/MOTD.txt > $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt
+			
+			# Pegar o MOTD-CONVERTIDO.txt que está em UTF-8 e jogar informações para MOTD.txt original e apaga MOTD-CONVERTIDO.txt
+			cat $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt > $LOCAL_EMULADOR/npc/MOTD.txt
+			rm -rf $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt
+			
+				MOTD_CRONUS=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
+				
+			# Preparar arquivo MOTD.txt
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/Seja.*forum/Teste/" $LOCAL_EMULADOR/npc/MOTD.txt
+			
+			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_CRONUS/Seja bem-vindo(a) ao $NOVO_NOME, vote diariamente em nosso servidor!/" $LOCAL_EMULADOR/npc/MOTD.txt
+			
+			echo ""
+			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
+			echo ""
 		else
 			echo ""
 			echo "O nome do seu servidor não pode ser mudado, verifique se o mesmo é brAthena, Cronus ou Hércules."
