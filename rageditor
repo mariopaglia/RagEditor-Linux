@@ -14,11 +14,20 @@ PATH=/sbin:/usr/sbin:/usr/bin:/bin
 #
 # Versões:
 #
-# 1.0 - Desenvolvimento e criação inicial do script 
+# 0.1 - 14/11/2017 - Desenvolvimento e criação inicial do script
+# 0.2 - 16/11/2017 - Finalização da Função #1, 100% funcional para brAthena, Cronus e Hércules
 
 # Variáveis de Ambiente
 
 LOCAL_EMULADOR=/home/emulador		# Mudar aqui o diretório padrão do seu emulador (até a pasta raiz)
+
+# Variáveis do brAthena e Cronus
+
+NOME_B_C=$(cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1)
+
+# Variáveis do Hércules
+
+NOME_HERCULES=$(cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | cut -d '"' -f2)
 
 # Menu inicial com a escolha de opções
 
@@ -40,13 +49,9 @@ echo ""
 echo -n ">>> Digite a opção desejada: "
 read OPCAO
 
-# Comando para descobrir qual o nome do emulador está atualmente configurado no arquivo char-server.conf
-
-NOME_ATUAL=$(cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 || cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1)
-
 # Comando para descobrir qual o emulador instalado no momento, brAthena, Cronus ou Hércules
 
-DESC_EMULADOR=$(ls -l $LOCAL_EMULADOR | awk '{print $9}' | cut -d "-" -f1 | uniq | grep -E "brAthena|Cronus|Hercules")
+DESC_EMULADOR=$(ls -l $LOCAL_EMULADOR | awk '{print $9}' | cut -d "-" -f1 | uniq | grep -E "brAthena|Cronus|Hercules" | head -n 1)
 
 # CASE com as programações de cada opção
 
@@ -60,21 +65,24 @@ case $OPCAO in
 		
 		if [ "$DESC_EMULADOR" = "brAthena" ]
 		then
+			
 			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
-			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
+			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_B_C/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
 			
 				MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
 			
 			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
-			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME/" $LOCAL_EMULADOR/npc/MOTD.txt
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME, vote diariamente em nosso servidor!/" $LOCAL_EMULADOR/npc/MOTD.txt
 
 			echo ""
 			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
 			echo ""
+			
 		elif [ "$DESC_EMULADOR" = "Cronus" ]
 		then
+			
 			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção				
-			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_ATUAL/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
+			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_B_C/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
 			
 			# Converter MOTD.txt original ISO-8859 em UTF-8
 			iconv -f iso-8859-1 -t utf-8 $LOCAL_EMULADOR/npc/MOTD.txt > $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt
@@ -94,6 +102,22 @@ case $OPCAO in
 			echo ""
 			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
 			echo ""
+			
+		elif [ "$DESC_EMULADOR" = "Hercules" ]	
+		then
+			
+			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
+			cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | cut -d '"' -f2 | sed -i "s/$NOME_HERCULES/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char/char-server.conf
+			
+				MOTD_HERCULES=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
+			
+			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
+			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_HERCULES/Seja bem-vindo(a) ao $NOVO_NOME, vote diariamente em nosso servidor!/" $LOCAL_EMULADOR/npc/MOTD.txt
+
+			echo ""
+			echo "Nome do servidor alterado com sucesso para: $NOVO_NOME"
+			echo ""
+		
 		else
 			echo ""
 			echo "O nome do seu servidor não pode ser mudado, verifique se o mesmo é brAthena, Cronus ou Hércules."
