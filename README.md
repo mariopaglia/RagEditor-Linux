@@ -14,10 +14,9 @@ Projeto criado por: [PAGLIA HOST BRASIL INFORMÁTICA LTDA](https://pagliahost.co
 
 Atenção: Lembre-se de possuir acesso "root" (administrativo), caso não tenha, peça para que o administrator do sistema faça os procedimentos abaixo:
 
-* 1º - Baixe o arquivo [rageditor](https://github.com/pagliahost/rageditor-linux/blob/master/rageditor)
-* 2º - Acesse o diretório "/bin" em sua VPS
-* 3º - Envie o arquivo "rageditor" para o diretório
-* 4º - Através do Shell, execute o comando: chmod +x /bin/rageditor
+* 1º - Baixe o arquivo [rageditor](https://github.com/pagliahost/rageditor-linux/archive/master.zip)
+* 2º - Extraia na pasta raiz (/) de seu sistema linux para que o "rageditor" fique dentro de /bin
+* 3º - Através do terminal Shell, execute o comando: chmod +x /bin/rageditor
 
 Pronto, sua instalação está realizada, agora basta realizar o comando através de qualquer tela do terminal: rageditor
 
