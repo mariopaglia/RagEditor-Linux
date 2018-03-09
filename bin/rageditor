@@ -10,7 +10,7 @@ PATH=/sbin:/usr/sbin:/usr/bin:/bin
 # Colaboradores:
 #
 # Emuladores Compatíveis: brAthena, Cronus e Hércules
-# Linguagens Disponíveis: Português (PT-BR)
+# Idiomas Disponíveis: Português (PT-BR)
 #
 # Versões:
 #
@@ -46,8 +46,7 @@ echo "[9] CONFIGURAR ASPD"
 echo ""
 echo "PARA SAIR, DIGITE SAIR OU APERTE CTRL+C"
 echo ""
-echo -n ">>> Digite a opção desejada: "
-read OPCAO
+read -p "Digite a opção desejada: " OPCAO
 
 # Comando para descobrir qual o emulador instalado no momento, brAthena, Cronus ou Hércules
 
@@ -60,8 +59,7 @@ case $OPCAO in
 	"1")
 	
 		echo ""
-		echo -n ">>> Digite o nome do seu servidor: "
-		read NOVO_NOME
+		read -p "Digite o nome do seu servidor: " NOVO_NOME
 		
 		if [ "$DESC_EMULADOR" = "brAthena" ]
 		then
