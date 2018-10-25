@@ -67,7 +67,7 @@ case $OPCAO in
 			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
 			cat $LOCAL_EMULADOR/conf/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | sed -i "s/$NOME_B_C/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char-server.conf
 			
-				MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
+			MOTD_BRATHENA=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
 			
 			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
 			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_BRATHENA/Seja bem-vindo(a) ao $NOVO_NOME, vote diariamente em nosso servidor!/" $LOCAL_EMULADOR/npc/MOTD.txt
@@ -89,7 +89,7 @@ case $OPCAO in
 			cat $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt > $LOCAL_EMULADOR/npc/MOTD.txt
 			rm -rf $LOCAL_EMULADOR/npc/MOTD-CONVERTIDO.txt
 			
-				MOTD_CRONUS=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
+			MOTD_CRONUS=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
 				
 			# Preparar arquivo MOTD.txt
 			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/Seja.*forum/Teste/" $LOCAL_EMULADOR/npc/MOTD.txt
@@ -107,7 +107,7 @@ case $OPCAO in
 			# Comando que modifica o arquivo char-server.conf, alterando o nome do servidor informado pelo usuário na opção
 			cat $LOCAL_EMULADOR/conf/char/char-server.conf | grep "server_name" | awk '{print $2}' |  head -n 1 | cut -d '"' -f2 | sed -i "s/$NOME_HERCULES/$NOVO_NOME/" $LOCAL_EMULADOR/conf/char/char-server.conf
 			
-				MOTD_HERCULES=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
+			MOTD_HERCULES=$(cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2)
 			
 			# Comando que modifica o arquivo MOTD.txt, alterando a saudação inicial para o nome definido pelo usuário na opção			
 			cat $LOCAL_EMULADOR/npc/MOTD.txt | grep '"' | cut -d '"' -f2 | sed -i "s/$MOTD_HERCULES/Seja bem-vindo(a) ao $NOVO_NOME, vote diariamente em nosso servidor!/" $LOCAL_EMULADOR/npc/MOTD.txt
